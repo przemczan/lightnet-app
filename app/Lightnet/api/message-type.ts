@@ -1,0 +1,9 @@
+export enum MessageType {
+  TOGGLE = 1,
+  SET_BRIGHTNESS = 2,
+  SET_COLOR = 3,
+  GET_EDGES_LIST = 4,
+  GET_PANELS_STATES = 5,
+  PANELS_STATES = 6,
+  EDGES_LIST = 7,
+}
