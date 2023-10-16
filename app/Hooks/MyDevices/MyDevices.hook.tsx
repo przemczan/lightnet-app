@@ -64,7 +64,7 @@ export function useMyDevices() {
   );
 
   return {
-    devices,
+    myDevices: devices,
     saveDevice,
     removeDevice,
     fetchDevices,

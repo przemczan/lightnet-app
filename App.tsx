@@ -3,24 +3,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { useColorScheme } from 'react-native';
 import { PortalProvider } from 'react-native-portal';
-import { routes } from './app/routes';
+import { RootStackParamsList, routes } from './app/routes';
 import { DeviceController } from './app/Screens/DeviceController/DeviceController';
 import { DeviceDiscovery } from './app/Screens/DeviceDiscovery/DeviceDiscovery';
 import { MyDevices } from './app/Screens/MyDevices/MyDevices';
 import { NavigationBar } from './app/Screens/NavigationBar';
 
-const Stack = createNativeStackNavigator();
-
-const config = {
-  screens: {
-    [routes.DEVICE_CONTROLLER]: 'device-controller/:deviceId',
-  },
-};
-
-const linking = {
-  prefixes: [],
-  config,
-};
+const Stack = createNativeStackNavigator<RootStackParamsList>();
 
 export default function App() {
   const scheme = useColorScheme();

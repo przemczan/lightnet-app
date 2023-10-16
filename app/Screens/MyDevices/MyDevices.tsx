@@ -1,20 +1,21 @@
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import { useCallback, useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useState } from 'react';
 import { View } from 'react-native';
 import { Appbar, Button, Card, IconButton, Menu, Text } from 'react-native-paper';
 import { BlackPortal } from 'react-native-portal';
+import { NativeStackScreenProps } from 'react-native-screens/native-stack';
 import { CardTitleWithActions } from '../../Components/CardTitleWithMenu/CardTitleWithActions';
 import { Dialogs } from '../../Components/Dialogs';
 import { PageWrapper } from '../../Components/PageWrapper';
 import { useMyDevices } from '../../Hooks/MyDevices/MyDevices.hook';
 import { MyDevice } from '../../Hooks/MyDevices/MyDevices.types';
 import { portals } from '../../portals';
-import { routes } from '../../routes';
+import { RootStackParamsList, routes } from '../../routes';
 
-export function MyDevices({ navigation }) {
+export function MyDevices({ navigation }: NativeStackScreenProps<RootStackParamsList, routes.HOME>) {
   const [showDeviceMenu, setShowDeviceMenu] = useState(0);
   const [deviceToDelete, setDeviceToDelete] = useState<MyDevice | null>(null);
-  const { devices, removeDevice, fetchDevices } = useMyDevices();
+  const { myDevices, removeDevice, fetchDevices } = useMyDevices();
 
   const closeDeviceMenu = () => {
     setShowDeviceMenu(0);
@@ -41,7 +42,7 @@ export function MyDevices({ navigation }) {
   const handleShowDeviceInformation = (device: MyDevice) => {};
 
   const handleDeviceClick = (device: MyDevice) => {
-    navigation.navigate(routes.DEVICE_CONTROLLER, { deviceId: device.id });
+    navigation.navigate(routes.DEVICE_CONTROLLER, { deviceId: String(device.id) });
   };
 
   useFocusEffect(
@@ -56,7 +57,7 @@ export function MyDevices({ navigation }) {
         <Appbar.Action icon="magnify" onPress={() => navigation.navigate(routes.DEVICE_DISCOVERY)} />
       </BlackPortal>
 
-      {devices?.map(device => (
+      {myDevices?.map(device => (
         <Card key={device.name} onPress={() => handleDeviceClick(device)}>
           <CardTitleWithActions title={device.name}>
             <Menu
@@ -82,7 +83,7 @@ export function MyDevices({ navigation }) {
         <Text>Delete device?</Text>
       </Dialogs.Confirmation>
 
-      {!devices.length && (
+      {!myDevices.length && (
         <View style={{ justifyContent: 'center', height: '100%' }}>
           <Button icon="cloud-search" onPress={() => navigation.navigate(routes.DEVICE_DISCOVERY)}>
             Tap here to search for devices in your network

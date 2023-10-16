@@ -1,4 +1,4 @@
-import { DataBuffer } from './data-buffer';
+import { DataBuffer } from './DataBuffer';
 
 export abstract class DataMapping<TDataMappingType> {
   protected next: DataMapping<any> | undefined;
@@ -6,8 +6,7 @@ export abstract class DataMapping<TDataMappingType> {
   protected startOffset = 0;
   protected endOffset = 0;
 
-  constructor (protected dataBuffer: DataBuffer) {
-  }
+  constructor(protected dataBuffer: DataBuffer) {}
 
   setNext(mapping: DataMapping<any>) {
     this.next = mapping;
