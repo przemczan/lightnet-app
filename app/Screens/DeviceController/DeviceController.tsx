@@ -81,7 +81,14 @@ export function DeviceController({ route }: NativeStackScreenProps<RootStackPara
     <PageWrapper>
       <BlackPortal name={portals.HEADER}></BlackPortal>
       <View
-        style={{ marginHorizontal: 10, marginBottom: 10, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+        style={{
+          marginHorizontal: 10,
+          marginBottom: 10,
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
         <Text>{currentDevice.name}</Text>
         {connectionState === ConnectionState.CONNECTED ? (
           <IconButton icon="lan-connect" />

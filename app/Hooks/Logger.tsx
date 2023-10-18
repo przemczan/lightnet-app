@@ -1,4 +1,5 @@
-import { logger as reactLogger } from 'react-native-logs';
+import { consoleTransport, fileAsyncTransport, logger as reactLogger } from 'react-native-logs';
+import * as util from 'util';
 import { LoggerInterface } from '../Lightnet/LoggerInterface';
 
 export const LoggerType = {
@@ -7,7 +8,10 @@ export const LoggerType = {
 };
 
 export const logger = reactLogger.createLogger({
+  transport: __DEV__ ? consoleTransport : fileAsyncTransport,
+  severity: __DEV__ ? 'debug' : 'error',
   enabledExtensions: Object.values(LoggerType),
+  stringifyFunc: msg => `${typeof msg === 'object' ? util.inspect(msg, { depth: 5, colors: true }) : msg}\n`,
 });
 
 export const getLogger = (extensionName: string): LoggerInterface => {

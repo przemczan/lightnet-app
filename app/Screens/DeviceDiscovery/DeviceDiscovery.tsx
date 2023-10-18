@@ -43,8 +43,9 @@ export function DeviceDiscovery() {
       {isScanning && <LabeledActivityIndicator text={'searching for devices...'} />}
 
       <ScrollView refreshControl={<RefreshControl refreshing={false} onRefresh={onRefresh} />}>
-        {Object.values(services).map(service => (
+        {Object.values(services).map((service, index) => (
           <List.Item
+            key={index}
             title={service.name}
             description={service.host}
             left={() => <IconButton icon={'layers-triple-outline'} />}
