@@ -8,6 +8,11 @@ import { DeviceController } from './app/Screens/DeviceController/DeviceControlle
 import { DeviceDiscovery } from './app/Screens/DeviceDiscovery/DeviceDiscovery';
 import { MyDevices } from './app/Screens/MyDevices/MyDevices';
 import { NavigationBar } from './app/Screens/NavigationBar';
+// @ts-ignore
+import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
+
+ReactNativeFeatureFlags.shouldEmitW3CPointerEvents = () => true;
+ReactNativeFeatureFlags.shouldPressibilityUseW3CPointerEventsForHover = () => true;
 
 const Stack = createNativeStackNavigator<RootStackParamsList>();
 

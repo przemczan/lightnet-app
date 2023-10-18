@@ -6,12 +6,10 @@ export function useSubscriptionUntilMounted<T>(subject$: Observable<T> | undefin
     let subscription: Subscription | undefined;
 
     if (subject$) {
-      console.log('subscribe');
       subscription = subject$.subscribe(callback);
     }
 
     return () => {
-      console.log('unsub');
       subscription && subscription.unsubscribe();
     };
   }, [subject$, callback]);

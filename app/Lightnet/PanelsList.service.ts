@@ -4,7 +4,7 @@ import { MessageEdgeListModel } from './api/model/message/MessageEdgeListModel';
 import { GetEdgeListMessage } from './api/message/GetEdgeListMessage';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { EdgeInfo } from './model/EdgeInfo';
-import { filter, first, tap } from 'rxjs/operators';
+import { filter, first, share, tap } from 'rxjs/operators';
 import { MessageApiInterface } from './interface/MessageApi';
 
 interface RawEdgeInfo {
@@ -25,7 +25,10 @@ export class PanelsListService {
   protected panelsSubject = new BehaviorSubject<PanelInfo[]>([]);
   protected panels: PanelInfo[] = [];
 
-  constructor(protected readonly messageApiService: MessageApiInterface, private readonly logger: LoggerInterface) {
+  constructor(
+    protected readonly messageApiService: MessageApiInterface,
+    private readonly logger: LoggerInterface,
+  ) {
     this.panels$ = this.panelsSubject.asObservable().pipe(
       filter(panels => panels.length > 0),
       tap(panels => this.logger.debug(panels)),
@@ -51,7 +54,7 @@ export class PanelsListService {
 
   protected buildPanels(
     panel: RawPanelInfo,
-    parentEdge: RawEdgeInfo,
+    parentEdge: RawEdgeInfo | null,
     panelsList: RawPanelInfo[],
     output: PanelInfo[],
   ): PanelInfo {
@@ -73,13 +76,13 @@ export class PanelsListService {
 
       if ((!parentEdge || parentEdge.nextEdgeIndex !== edge.index) && edge.nextPanelId) {
         nextPanel = this.buildPanels(
-          panelsList.find(item => item.panelId === edge.nextPanelId),
+          panelsList.find(item => item.panelId === edge.nextPanelId)!,
           edge,
           panelsList,
           output,
         );
         edgeInfo.connectedEdge = nextPanel.edges.find(edgeElement => edgeElement.index === edge.nextEdgeIndex);
-        edgeInfo.connectedEdge.connectedEdge = edgeInfo;
+        edgeInfo.connectedEdge!.connectedEdge = edgeInfo;
       }
     });
 

@@ -22,7 +22,6 @@ export function useMyDevices() {
   useEffect(() => {
     const saveInStorage = async () => {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(devices));
-      logger.debug([STORAGE_KEY, JSON.stringify(devices)]);
     };
     saveInStorage();
   }, [devices]);
@@ -38,10 +37,8 @@ export function useMyDevices() {
       if (index >= 0) {
         const updateDevice = { ...devices[index], ...device };
         const newDevicesList = devices.splice(index, 1, updateDevice);
-        logger.debug('updating', device);
         setDevices(newDevicesList);
       } else {
-        logger.debug('adding', device);
         device.id = getNextId();
         setDevices([...devices, device as MyDevice]);
       }

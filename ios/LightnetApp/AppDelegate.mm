@@ -11,6 +11,8 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
+  RCTSetDispatchW3CPointerEvents(YES);
+
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 

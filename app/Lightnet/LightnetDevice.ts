@@ -23,10 +23,13 @@ export class LightnetDevice implements LightnetDeviceInterface {
   private panelsListService: PanelsListService;
   private panelsStatesService: PanelsStatesService;
 
-  constructor(private readonly connector: MessageApiConnectorInterface, logger: LoggerInterface) {
+  constructor(
+    private readonly connector: MessageApiConnectorInterface,
+    private readonly logger: LoggerInterface,
+  ) {
     this.messageApiService = new MessageApiService(connector, logger);
     this.panelsListService = new PanelsListService(this.messageApiService, logger);
-    this.panelsStatesService = new PanelsStatesService(this.messageApiService, this.panelsListService);
+    this.panelsStatesService = new PanelsStatesService(this.messageApiService, this.panelsListService, logger);
 
     this._onLoaded$ = this.panelsListService.panels$.pipe(
       map(panelsList => this.buildDevicePanelsList(panelsList)),

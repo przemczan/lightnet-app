@@ -15,7 +15,10 @@ export class MessageApiService implements MessageApiInterface {
   public readonly messageEdgesList$: Observable<MessageEdgeListModel>;
   public readonly messagePanelsStates$: Observable<MessagePanelsStatesModel>;
 
-  constructor(private connector: MessageApiConnectorInterface, private readonly logger: LoggerInterface) {
+  constructor(
+    private connector: MessageApiConnectorInterface,
+    private readonly logger: LoggerInterface,
+  ) {
     this.incomingMessages$ = connector.messages$.pipe(
       map(buffer => this.mapToMessageMeta(buffer)),
       filter(meta => {

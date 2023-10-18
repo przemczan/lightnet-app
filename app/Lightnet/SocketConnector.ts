@@ -19,7 +19,10 @@ export class SocketConnector implements MessageApiConnectorInterface {
   private inputSubscription: Subscription | undefined;
   private options: Partial<WsConnectorOptions> = {};
 
-  constructor(private readonly logger: LoggerInterface, options: WsConnectorOptions) {
+  constructor(
+    private readonly logger: LoggerInterface,
+    options: WsConnectorOptions,
+  ) {
     this.setOptions(options);
     this._messages$ = this.output$.asObservable();
     this._messages$.subscribe(arrayBuffer => this.onMessageEvent(arrayBuffer));
@@ -86,7 +89,7 @@ export class SocketConnector implements MessageApiConnectorInterface {
   }
 
   private onMessageEvent(arrayBuffer: ArrayBuffer) {
-    this.logger.debug('IN', arrayBuffer);
+    this.logger.debug(`IN (${arrayBuffer.byteLength}B)`);
   }
 
   private getUrl(): string {

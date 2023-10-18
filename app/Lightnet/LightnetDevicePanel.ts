@@ -1,5 +1,5 @@
 import { LightnetDevicePanelInterface } from './interface/LightnetDevicePanelInterface';
-import { Observable, Subject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { PanelState } from './model/PanelState';
 import { PanelInfo } from './model/PanelInfo';
 import { PanelLayout } from './model/PanelLayout';
@@ -21,7 +21,7 @@ export class LightnetDevicePanel implements LightnetDevicePanelInterface {
     panelId: 0,
   };
   private readonly _state$: Observable<PanelState>;
-  private readonly stateSubject = new Subject<PanelState>();
+  private readonly stateSubject = new ReplaySubject<PanelState>(1);
 
   constructor(
     private readonly _device: LightnetDeviceInterface,
