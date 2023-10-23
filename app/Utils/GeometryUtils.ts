@@ -8,7 +8,7 @@ export interface Dimensions {
   height: number;
 }
 
-export class Utils {
+export class GeometryUtils {
   static isInsidePolygon(x: number, y: number, points: Point[]): boolean {
     let is = false;
 

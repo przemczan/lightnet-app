@@ -3,11 +3,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { useColorScheme } from 'react-native';
 import { PortalProvider } from 'react-native-portal';
-import { RootStackParamsList, routes } from './app/routes';
-import { DeviceController } from './app/Screens/DeviceController/DeviceController';
-import { DeviceDiscovery } from './app/Screens/DeviceDiscovery/DeviceDiscovery';
-import { MyDevices } from './app/Screens/MyDevices/MyDevices';
-import { NavigationBar } from './app/Screens/NavigationBar';
+import { RootStackParamsList, routes } from './routes';
+import { DeviceController } from './Screens/DeviceController/DeviceController';
+import { DeviceDiscovery } from './Screens/DeviceDiscovery/DeviceDiscovery';
+import { MyDevices } from './Screens/MyDevices/MyDevices';
+import { NavigationBar } from './Screens/NavigationBar';
 // @ts-ignore
 import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
 

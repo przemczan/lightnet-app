@@ -1,16 +1,17 @@
-import { consoleTransport, fileAsyncTransport, logger as reactLogger } from 'react-native-logs';
+import { consoleTransport, logger as reactLogger } from 'react-native-logs';
 import * as util from 'util';
 import { LoggerInterface } from '../Lightnet/LoggerInterface';
+import { Config } from './Config';
 
 export const LoggerType = {
   SOCKET: 'SOCKET',
-  LIGHTNET_DEVICE: 'LIGHTNET DEVICE',
+  LIGHTNET_DEVICE: 'LIGHTNET_DEVICE',
 };
 
 export const logger = reactLogger.createLogger({
-  transport: __DEV__ ? consoleTransport : fileAsyncTransport,
-  severity: __DEV__ ? 'debug' : 'error',
-  enabledExtensions: Object.values(LoggerType),
+  transport: consoleTransport,
+  severity: Config.isDevelopment() ? 'debug' : 'error',
+  enabledExtensions: Config.enabledLoggers(),
   stringifyFunc: msg => `${typeof msg === 'object' ? util.inspect(msg, { depth: 5, colors: true }) : msg}\n`,
 });
 
@@ -20,5 +21,3 @@ export const getLogger = (extensionName: string): LoggerInterface => {
 
 export const socketLogger = getLogger(LoggerType.SOCKET);
 export const lightnetDeviceLogger = getLogger(LoggerType.LIGHTNET_DEVICE);
-
-logger.disable(LoggerType.SOCKET);

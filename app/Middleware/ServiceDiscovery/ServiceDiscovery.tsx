@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Zeroconf from 'react-native-zeroconf';
 import EventEmitter from 'react-native/Libraries/vendor/emitter/EventEmitter';
 import { NodeJS } from 'timers';
-import { getLogger } from '../Logger';
+import { getLogger } from '../../Services/Logger';
 import { DiscoveryServiceList, ServiceDiscoveryInterface, ServiceDiscoveryProps } from './ServiceDiscovery.types';
 
 const logger = getLogger('ServiceDiscovery');

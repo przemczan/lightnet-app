@@ -2,13 +2,13 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { View } from 'react-native';
 import Svg, { G, Polygon } from 'react-native-svg';
 import { combineLatest, mergeMap } from 'rxjs';
-import { useSubscriptionUntilMounted } from '../../Hooks/RxJsHooks';
+import { useSubscriptionUntilMounted } from '../../Middleware/RxJsHooks';
 import { LightnetDeviceInterface } from '../../Lightnet/interface/LightnetDeviceInterface';
 import { LightnetDevicePanelInterface } from '../../Lightnet/interface/LightnetDevicePanelInterface';
 import { PanelState } from '../../Lightnet/model/PanelState';
 import { LabeledActivityIndicator } from '../ActivityIndicator/LabeledActivityIndicator';
 import { Containers } from '../Containers/Containers';
-import { Point, Dimensions, Utils } from './Utils';
+import { Point, Dimensions, GeometryUtils } from '../../Utils/GeometryUtils';
 
 type LightnetDeviceVisualizerProps = {
   lightnetDevice: LightnetDeviceInterface;
@@ -142,7 +142,7 @@ export function LightnetDeviceVisualizer({
         return;
       }
 
-      const panelCoords = panelsCoordinates.find(coords => Utils.isInsidePolygon(x, y, coords.edges));
+      const panelCoords = panelsCoordinates.find(coords => GeometryUtils.isInsidePolygon(x, y, coords.edges));
 
       if (panelCoords?.panel !== hoveredPanel.curr) {
         setHoveredPanel({ prev: hoveredPanel.curr, curr: panelCoords?.panel });
@@ -162,7 +162,7 @@ export function LightnetDeviceVisualizer({
       setIsPointerMoving(false);
 
       if (!isPointerMoving) {
-        const panelCoords = panelsCoordinates.find(coords => Utils.isInsidePolygon(x, y, coords.edges));
+        const panelCoords = panelsCoordinates.find(coords => GeometryUtils.isInsidePolygon(x, y, coords.edges));
 
         if (panelCoords) {
           onPanelPointerPress?.(panelCoords.panel);
@@ -187,7 +187,7 @@ export function LightnetDeviceVisualizer({
     useMemo(
       () =>
         lightnetDevice?.onLoaded$.pipe(
-          mergeMap(([availablePanels, layouts]) => {
+          mergeMap(([availablePanels]) => {
             setPanels(availablePanels);
 
             return combineLatest(availablePanels.map(panel => panel.state$));

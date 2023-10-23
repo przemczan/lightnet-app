@@ -7,8 +7,8 @@ import { Containers } from '../../Components/Containers/Containers';
 import { Dialogs } from '../../Components/Dialogs';
 import { PageWrapper } from '../../Components/PageWrapper';
 import { KeyValueItem } from '../../Components/PropsList';
-import { useMyDevices } from '../../Hooks/MyDevices/MyDevices.hook';
-import { MyDevice } from '../../Hooks/MyDevices/MyDevices.types';
+import { useMyDevices } from '../../Middleware/MyDevices/MyDevices.hook';
+import { MyDevice } from '../../Middleware/MyDevices/MyDevices.types';
 import { portals } from '../../portals';
 import { RootStackParamsList, routes } from '../../routes';
 
@@ -37,7 +37,7 @@ export function MyDevices({ navigation }: NativeStackScreenProps<RootStackParams
     if (selectedDevice) {
       removeDevice(selectedDevice.id);
     }
-    setSelectedDevice(null);
+    setShowDeviceRemovalConfirmation(false);
   }, [selectedDevice, removeDevice]);
 
   const handleEditDevice = (device: MyDevice) => {};

@@ -3,10 +3,10 @@ import { RefreshControl, ScrollView } from 'react-native';
 import { BlackPortal } from 'react-native-portal';
 import { LabeledActivityIndicator } from '../../Components/ActivityIndicator/LabeledActivityIndicator';
 import { PageWrapper } from '../../Components/PageWrapper';
-import { useDeviceDiscovery } from '../../Hooks/DeviceDiscovery/DeviceDiscovery.hook';
+import { useDeviceDiscovery } from '../../Middleware/DeviceDiscovery/DeviceDiscovery.hook';
 import { IconButton, List } from 'react-native-paper';
-import { useMyDevices } from '../../Hooks/MyDevices/MyDevices.hook';
-import { DiscveryService } from '../../Hooks/ServiceDiscovery/ServiceDiscovery.types';
+import { useMyDevices } from '../../Middleware/MyDevices/MyDevices.hook';
+import { DiscveryService } from '../../Middleware/ServiceDiscovery/ServiceDiscovery.types';
 import { portals } from '../../portals';
 
 export function DeviceDiscovery() {

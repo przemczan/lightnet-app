@@ -1,16 +1,18 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 import { useCallback, useEffect, useState } from 'react';
-import { getLogger } from '../Logger';
+import { getLogger } from '../../Services/Logger';
 import { MyDevice } from './MyDevices.types';
 
 const logger = getLogger('useMyDevices');
 const STORAGE_KEY = 'MyDevices';
+const storage = new MMKVLoader().initialize();
 
 export function useMyDevices() {
   const [devices, setDevices] = useState<MyDevice[]>([]);
+  const [devicesInStorage, setDevicesInStorage] = useMMKVStorage(STORAGE_KEY, storage, '');
 
   const fetchDevices = useCallback(async () => {
-    const devicesFromStorage = JSON.parse((await AsyncStorage.getItem(STORAGE_KEY)) || '[]');
+    const devicesFromStorage = JSON.parse(devicesInStorage);
     setDevices(devicesFromStorage);
     logger.debug('read devices', devicesFromStorage);
   }, []);
@@ -21,7 +23,7 @@ export function useMyDevices() {
 
   useEffect(() => {
     const saveInStorage = async () => {
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(devices));
+      setDevicesInStorage(JSON.stringify(devices));
     };
     saveInStorage();
   }, [devices]);

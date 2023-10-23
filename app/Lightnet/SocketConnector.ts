@@ -57,9 +57,9 @@ export class SocketConnector implements MessageApiConnectorInterface {
       // @ts-ignore
       this.socket.binaryType = 'arraybuffer';
       this.socket.onopen = () => {
-        this.inputSubscription = this.input$.subscribe(data => this.socket?.send(data));
-        this.stateSubject.next(ConnectorState.CONNECTED);
         this.logger.debug('connected');
+        this.stateSubject.next(ConnectorState.CONNECTED);
+        this.inputSubscription = this.input$.subscribe(data => this.socket?.send(data));
       };
       this.socket.onmessage = message => this.output$.next(message.data);
       this.socket.onclose = () => this.stateSubject.next(ConnectorState.DISCONNECTED);
@@ -89,7 +89,7 @@ export class SocketConnector implements MessageApiConnectorInterface {
   }
 
   private onMessageEvent(arrayBuffer: ArrayBuffer) {
-    this.logger.debug(`IN (${arrayBuffer.byteLength}B)`);
+    this.logger.info(`IN (${arrayBuffer.byteLength}B)`);
   }
 
   private getUrl(): string {

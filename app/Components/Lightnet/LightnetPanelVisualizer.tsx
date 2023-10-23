@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { G, Polygon } from 'react-native-svg';
-import { useSubscriptionUntilMounted } from '../../Hooks/RxJsHooks';
+import { useSubscriptionUntilMounted } from '../../Middleware/RxJsHooks';
 import { LightnetDevicePanelInterface } from '../../Lightnet/interface/LightnetDevicePanelInterface';
 import { PanelState } from '../../Lightnet/model/PanelState';
 
